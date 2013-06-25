@@ -28,14 +28,9 @@ function game_model(){
 		}
 		for(var i = 0;  i < this.invaders.length; i++){
 			var bubb = this.invaders[i];
-<<<<<<< HEAD
-			if(bubb.y<=0 && bubb.active){
-				alert("Shmuck, press restart to restart");
-=======
 			if(bubb.y<=0 && bubb.active && gm.game){
 				alert("You lose the game silly, press restart game to try again, ya dunce");
 				gm.game = !gm.game;
->>>>>>> origin/DJDJDJD
 			}
 		}
 		// to update the model just update all of the bubbles
@@ -77,14 +72,9 @@ function game_model(){
 				kills++;
 				console.log(kills);
 			}
-<<<<<<< HEAD
-			if(kills==gm.invaders.length){
-				alert("WINNA, Restart button to restart");
-=======
 			if(kills==gm.invaders.length && gm.game){
 				alert("You are winner! Press the Restart Game button to enjoy the experience again!!!!");
 				gm.game = !gm.game;
->>>>>>> origin/DJDJDJD
 			}
 		}
 	}
@@ -254,13 +244,14 @@ function restart () {
     toggle();
     }
 function shoot(){
+    if (gm.airballs.length < 1) {
     console.log(gm.theStraw.x);
     var trans = gm.theStraw.x/4;
 	var a = new bubble(trans,1,1);
 	a.vy = 50;
 	a.vx = 0;
 	gm.airballs.push(a);
-	
+	}
 }
 
 function left(){
