@@ -237,7 +237,10 @@ function draw_straw(cont, straw){
 
 }
 
-
+function restart () {
+    gm = new game_model();
+    gm.running = !gm.running;
+    }
 function shoot(){
     console.log(gm.theStraw.x);
     var trans = gm.theStraw.x/4;
