@@ -35,23 +35,45 @@ The game model takes place in a 100x100 board where the bubbles
 stay in the top 80% of the board...
 */
 function game_model(){
-	this.bubbles=[];
+	this.directionRight = true;
+	this.moveDownLevel = false;
+	this.invaders=[];
 	this.airballs=[];
 	this.running=false;
 	this.startTime = 0;
 	this.theStraw = new straw();
 	this.update = function(){
-		// to update the model just update all of the bubbles
-		for(var i=0; i<this.bubbles.length; i++){
-			this.bubbles[i].update();
+		// Change Bubble direction if one runs into an edge!
+		for(var i = 0;  i < this.invaders.length; i++){
+			var bubb = this.invaders[i];
+			if (bubb.x<bubb.r) {
+				this.directionRight = true;
+				this.moveDownLevel = true;
+			} else if (bubb.x>100-bubb.r) {
+				this.directionRight = false;
+				this.moveDownLevel = true;
+			}
 		}
+		// to update the model just update all of the bubbles
+		for(var i=0; i<this.invaders.length; i++){
+			this.invaders[i].update();
+		}
+		this.moveDownLevel = false;
+		/*
+		if (this.moveDownLevel) {
+			this.moveDownLevel = false;
+			for(var i=0; i<this.bubbles.length; i++){
+				this.bubbles[i].update();
+			}
+		}
+		*/
 		// check for collisions
 		var airballList = this.airballs;
 		for(var i=airballList.length-1; i>=0; i--){
 			var a = this.airballs[i];
 			a.update();
-			for(var j=0; j<this.bubbles.length; j++){
-				var b = this.bubbles[j];
+			for(var j=0; j<this.invaders.length; j++){
+				var b = this.invaders[j];
 				//console.log("test intersection "+[a,b])
 				if (a.intersects(b)){
 					b.active=false;
@@ -65,10 +87,11 @@ function game_model(){
 			}
 		}
 	}
+
 	for(var i=0;i<10;i++){
 		var bx=Math.round(Math.random()*100);
 		var by=30+Math.round(Math.random()*70);
-		this.bubbles.push(new bubble(bx,by,4) );
+		this.invaders.push(new invader(bx,by,4) );
 	}
 /*	
 	for(var i=0; i<4;i++){
@@ -123,6 +146,58 @@ function bubble(x,y,r){
 	}
 }
 
+function invader(x,y,r){
+	this.x=x;
+	this.y=y;
+//	this.vx= 10;
+//	this.vy= 0;
+	this.r=r;
+	this.lastTime = +new Date();
+	this.active=true;
+}
+
+invader.prototype.update = function(){
+		// to update a bubble calculate its new position
+        // based on how much time has elapsed since it was last updated
+		var t = +new Date();
+		var dt = t-this.lastTime;
+		this.lastTime=t;
+		if (gm.moveDownLevel) {
+			this.y -= 100.0*dt/1000.0
+		}
+		if (gm.directionRight) {
+			this.x += 10.0*dt/1000.0
+		} else {
+			this.x -= 10.0*dt/1000.0
+		}
+//		this.x += this.vx*dt/1000.0;
+//		this.y += this.vy*dt/1000.0;	
+}
+
+invader.prototype.draw = function(cont){
+		if (!this.active) return;
+		gScale = Math.min(gameView.w,gameView.h);
+		px = gScale*this.x/100;
+		py = gScale*(100-this.y)/100;
+		pr = gScale*this.r/100;
+		cont.beginPath();
+		cont.arc(px,py,pr,0,2*Math.PI,false);
+		//cont.strokeStyle="#AAF";
+		//cont.stroke();
+		cont.fillStyle="#006";
+		cont.fill();
+}
+invader.prototype.intersects = function(b) {
+		var dx = this.x -b.x;
+		var dy = this.y - b.y;
+		var d = Math.sqrt(dx*dx + dy*dy);
+		//console.log([this,b,dx,dy,d]);
+		return (d < b.r+this.r);
+}
+
+
+
+
 function game_loop(){
 	gm.update();
 	draw_view();
@@ -140,8 +215,8 @@ function draw_view(){
 	cont.font = "bold "+ 24 + "pt fantasy";
 	cont.fillText("Bubble Game",20,20);
 	//console.log([gm.bubbles.length,+new Date()]);
-	for(var i=0; i<gm.bubbles.length; i++){
-		gm.bubbles[i].draw(cont);
+	for(var i=0; i<gm.invaders.length; i++){
+		gm.invaders[i].draw(cont);
 	}
 	for(var i=0; i<gm.airballs.length; i++){
 		gm.airballs[i].draw(cont);
