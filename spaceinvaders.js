@@ -89,11 +89,11 @@ function game_model(){
 	}
 
 	for(var i=0;i<10;i++){
-		var bx=Math.round(Math.random()*100);
+		var bx=10 + Math.round(Math.random()*80);
 		var by=30+Math.round(Math.random()*70);
 		this.invaders.push(new invader(bx,by,4) );
 	}
-/*	
+	/*	
 	for(var i=0; i<4;i++){
 		var bx=Math.round(Math.random()*100);
 		var by=35;
