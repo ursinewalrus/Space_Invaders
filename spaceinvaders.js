@@ -245,7 +245,6 @@ function restart () {
     }
 function shoot(){
     if (gm.airballs.length < 1) {
-    console.log(gm.theStraw.x);
     var trans = gm.theStraw.x/4;
 	var a = new bubble(trans,1,1);
 	a.vy = 50;
@@ -261,7 +260,6 @@ function left(){
 }
 
 function right(){
-    console.log(gm.theStraw.x);
 	if(gm.theStraw.x < 380) {
         gm.theStraw.x += 20;
 	}
@@ -283,9 +281,8 @@ function initialize() {
 		} else if (evt.keyCode='D'.charCodeAt(0)){
 			right();
 		}
-		//console.log("evt = "+evt.keyCode+ ['A'.charCodeAt(0),'D'.charCodeAt(0),' '.charCodeAt(0)]);
 	}
-	//alert("added keydown");
+
 }
 
 var gm = new game_model();
