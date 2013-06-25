@@ -213,7 +213,7 @@ function draw_view(){
 	cont.fillStyle ="#00F";
 	cont.textBaseline = "top";
 	cont.font = "bold "+ 24 + "pt fantasy";
-	cont.fillText("Bubble Game",20,20);
+	cont.fillText("Spooce inBaderz",20,20);
 	//console.log([gm.bubbles.length,+new Date()]);
 	for(var i=0; i<gm.invaders.length; i++){
 		gm.invaders[i].draw(cont);
