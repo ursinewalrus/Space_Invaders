@@ -35,6 +35,7 @@ The game model takes place in a 100x100 board where the bubbles
 stay in the top 80% of the board...
 */
 function game_model(){
+	//this.kills=0;
 	this.directionRight = true;
 	this.moveDownLevel = false;
 	this.invaders=[];
@@ -52,6 +53,12 @@ function game_model(){
 			} else if (bubb.x>100-bubb.r && bubb.active) {
 				this.directionRight = false;
 				this.moveDownLevel = true;
+			}
+		}
+		for(var i = 0;  i < this.invaders.length; i++){
+			var bubb = this.invaders[i];
+			if(bubb.y<=0 && bubb.active){
+				alert("Smuck");
 			}
 		}
 		// to update the model just update all of the bubbles
@@ -84,6 +91,16 @@ function game_model(){
 				this.airballs = this.airballs.slice(0,i).concat(this.airballs.slice(i+1));
 				// remove element a from airballList
 				
+			}
+		}
+		kills=0;
+		for(var i=0;i<gm.invaders.length;i++){
+			if(!gm.invaders[i].active){
+				kills++;
+				console.log(kills);
+			}
+			if(kills==gm.invaders.length){
+				alert("WINNA");
 			}
 		}
 	}
