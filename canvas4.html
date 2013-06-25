@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="canvas4.js"></script>
+
+	<style>
+	  canvas {border:6px solid blue}
+	</style>
+</head>
+
+<body>
+
+<h1>Simple Game</h1>
+<div>
+This is a bubble game where the goal is to try to pop all of the bubbles in
+30 seconds and at each level there are more bubbles and they move more quickly.
+You pop the bubbles by blowing through a straw which you can rotate left and right
+using keypresses (e.g. A and D) and you can puff a rapid burst of air with the space bar.
+</div>
+<div onkeypress="shoot()">
+<canvas width="400" height="400" id="mycanvas" "></canvas>
+</div>
+<br/>
+<button onclick="toggle()">Toggle Game</button>
+<button onclick="shoot()">Shoot</button>
+<button onclick="left()">Left</button>
+<button onclick="right()">Right</button>
+
+
+</body>
+</html>
