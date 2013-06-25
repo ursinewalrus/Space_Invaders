@@ -151,36 +151,37 @@ function draw_view(){
 }
 
 function straw(){
-	this.angle=Math.PI/6;
+    this.x = 200;
 }
 
-function draw_straw(cont){
+
+function draw_straw(cont, straw){
 	// we can draw a straw easily using translation and rotation of the context
-	cont.save();
-	var angle = gm.theStraw.angle;
-	cont.translate(gameView.w/2,gameView.h);
-	cont.rotate(Math.PI+angle);
 	cont.fillStyle = "#0F0";
-	cont.fillRect(-5,0,10,45);
-	cont.restore();
+	cont.fillRect(gm.theStraw.x,360,10,45);
+
 }
 
 
 function shoot(){
-	var a = new bubble(50,1,1);
-	z = gm.theStraw.angle;
+    console.log(gm.theStraw.x);
+    var trans = gm.theStraw.x/4;
+	var a = new bubble(trans,1,1);
+	z = 90;
 	//console.log("angle = "+ gm.theStraw.angle);
-	a.vx=50*Math.sin(z); a.vy=50*Math.cos(z);
+	//a.vx=50*Math.sin(z);
+	a.vy = 50;
+	a.vx = 0;
 	gm.airballs.push(a);
 	
 }
 
 function left(){
-	gm.theStraw.angle -= 0.1;
+	gm.theStraw.x -= 20;
 }
 
 function right(){
-	gm.theStraw.angle += 0.1;
+	gm.theStraw.x += 20;
 }
 
 
