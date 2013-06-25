@@ -58,7 +58,7 @@ function game_model(){
 		for(var i = 0;  i < this.invaders.length; i++){
 			var bubb = this.invaders[i];
 			if(bubb.y<=0 && bubb.active){
-				alert("Smuck");
+				alert("Shmuck, press restart to restart");
 			}
 		}
 		// to update the model just update all of the bubbles
@@ -100,14 +100,29 @@ function game_model(){
 				console.log(kills);
 			}
 			if(kills==gm.invaders.length){
-				alert("WINNA");
+				alert("WINNA, Restart button to restart");
 			}
 		}
 	}
 
-	for(var i=0;i<10;i++){
-		var bx=10 + Math.round(Math.random()*80);
-		var by=30+Math.round(Math.random()*70);
+	for(var i=0;i<6;i++){
+		var bx= 10 + (i*15);
+		var by=100;
+		this.invaders.push(new invader(bx,by,4) );
+	}
+	for(var i=0;i<6;i++){
+		var bx= 10 + (i*15);
+		var by=90;
+		this.invaders.push(new invader(bx,by,4) );
+	}
+	for(var i=0;i<6;i++){
+		var bx= 10 + (i*15);
+		var by=80;
+		this.invaders.push(new invader(bx,by,4) );
+	}
+	for(var i=0;i<6;i++){
+		var bx= 10 + (i*15);
+		var by=70;
 		this.invaders.push(new invader(bx,by,4) );
 	}
 	/*	
