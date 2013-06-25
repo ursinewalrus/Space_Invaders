@@ -167,9 +167,6 @@ function shoot(){
     console.log(gm.theStraw.x);
     var trans = gm.theStraw.x/4;
 	var a = new bubble(trans,1,1);
-	z = 90;
-	//console.log("angle = "+ gm.theStraw.angle);
-	//a.vx=50*Math.sin(z);
 	a.vy = 50;
 	a.vx = 0;
 	gm.airballs.push(a);
@@ -177,11 +174,16 @@ function shoot(){
 }
 
 function left(){
-	gm.theStraw.x -= 20;
+    if(gm.theStraw.x > 0) {
+        gm.theStraw.x -= 20;
+	}
 }
 
 function right(){
-	gm.theStraw.x += 20;
+    console.log(gm.theStraw.x);
+	if(gm.theStraw.x < 380) {
+        gm.theStraw.x += 20;
+	}
 }
 
 
