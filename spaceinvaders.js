@@ -1,33 +1,4 @@
-/*
-The bubble game model is a 100x100 square where the bubbles float in the top 100x80
-rectangle and the user tries to pop the bubbles by blowing through a straw centered at the bottom of the box and rotated at an angle of "a" degrees.
 
-There are two types of objects in the model:
-  bubbles (which have position, velocity, radius and color properties and
-    and update() method to change their position)
-  puffs (which are like bubbles, but don't bounce off walls, they just disappear)
-and
-  straws (which have an angle and a shoot() method that creates a new object and shoots it into the world)
-
-The Game Architecture consists of
-gm: a model that keeps track of the positions and velocities of all objects
-draw_view(): a function that draws the model on the screen
-update_model(): a function that updates the positions and velocities of all objects
-game_loop(): a function that updates the model then draws the view
-create_game(): a function that creates the initial state of the game
-
-The global variables are
-    gm: the game model
-and nothing else...
-
-In this version we add airballs that can pop bubbles ...
-
-Airballs are just bubbles but they are updated differently. 
-If any airball collides with a bubble it disappears.
-The airball itself disappears when it gets too close to a wall.
-*/
-
-// the gameView is an object describing the view on the screen...
 gameView = {w:400, h:400};
 
 /*
@@ -35,7 +6,7 @@ The game model takes place in a 100x100 board where the bubbles
 stay in the top 80% of the board...
 */
 function game_model(){
-	//this.kills=0;
+	this.game = true;
 	this.directionRight = true;
 	this.moveDownLevel = false;
 	this.invaders=[];
@@ -57,8 +28,9 @@ function game_model(){
 		}
 		for(var i = 0;  i < this.invaders.length; i++){
 			var bubb = this.invaders[i];
-			if(bubb.y<=0 && bubb.active){
-				alert("Smuck");
+			if(bubb.y<=0 && bubb.active && gm.game){
+				alert("You lose the game silly, press restart game to try again, ya dunce");
+				gm.game = !gm.game;
 			}
 		}
 		// to update the model just update all of the bubbles
@@ -94,13 +66,15 @@ function game_model(){
 			}
 		}
 		kills=0;
+		
 		for(var i=0;i<gm.invaders.length;i++){
 			if(!gm.invaders[i].active){
 				kills++;
 				console.log(kills);
 			}
-			if(kills==gm.invaders.length){
-				alert("WINNA");
+			if(kills==gm.invaders.length && gm.game){
+				alert("You are winner! Press the Restart Game button to enjoy the experience again!!!!");
+				gm.game = !gm.game;
 			}
 		}
 	}
@@ -180,12 +154,12 @@ invader.prototype.update = function(){
 		var dt = t-this.lastTime;
 		this.lastTime=t;
 		if (gm.moveDownLevel) {
-			this.y -= 100.0*dt/1000.0
+			this.y -= 200.0*dt/1000.0
 		}
 		if (gm.directionRight) {
-			this.x += 10.0*dt/1000.0
+			this.x += 20.0*dt/1000.0
 		} else {
-			this.x -= 10.0*dt/1000.0
+			this.x -= 20.0*dt/1000.0
 		}
 //		this.x += this.vx*dt/1000.0;
 //		this.y += this.vy*dt/1000.0;	
@@ -227,10 +201,6 @@ function draw_view(){
 	/*  clear the canvas */
 	cont.fillStyle = "#000";
 	cont.clearRect(0,0,gameView.w, gameView.h);
-	cont.fillStyle ="#00F";
-	cont.textBaseline = "top";
-	cont.font = "bold "+ 24 + "pt fantasy";
-	cont.fillText("Spooce inBaderz",20,20);
 	//console.log([gm.bubbles.length,+new Date()]);
 	for(var i=0; i<gm.invaders.length; i++){
 		gm.invaders[i].draw(cont);
