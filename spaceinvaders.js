@@ -239,7 +239,7 @@ function draw_straw(cont, straw){
 
 function restart () {
     gm = new game_model();
-    gm.running = !gm.running;
+    toggle();
     }
 function shoot(){
     console.log(gm.theStraw.x);
