@@ -31,6 +31,7 @@ function game_model(){
 			if(bubb.y<=0 && bubb.active && gm.game){
 				alert("You lose the game silly, press restart game to try again, ya dunce");
 				gm.game = !gm.game;
+				break;
 			}
 		}
 		// to update the model just update all of the bubbles
