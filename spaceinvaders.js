@@ -46,10 +46,10 @@ function game_model(){
 		// Change Bubble direction if one runs into an edge!
 		for(var i = 0;  i < this.invaders.length; i++){
 			var bubb = this.invaders[i];
-			if (bubb.x<bubb.r) {
+			if (bubb.x<bubb.r && bubb.active) {
 				this.directionRight = true;
 				this.moveDownLevel = true;
-			} else if (bubb.x>100-bubb.r) {
+			} else if (bubb.x>100-bubb.r && bubb.active) {
 				this.directionRight = false;
 				this.moveDownLevel = true;
 			}
